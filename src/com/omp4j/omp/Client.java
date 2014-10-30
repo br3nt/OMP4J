@@ -71,10 +71,10 @@ public class Client {
         // read output of nmap command
         String line, output = "";
         int nullCount = 0;
-        while ((line = procReader.readLine()) != null || nullCount < 10) {
+        while ((line = procReader.readLine()) != null || nullCount < 100) {
             if (line == null) nullCount++;
             System.out.println("line: " + line);
-            output += line;
+            output += line + "\n";
         }
 
         System.out.println("final:");
