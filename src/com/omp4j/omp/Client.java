@@ -35,7 +35,7 @@ public class Client {
         return new Proc(ompCommand() + " " + connectionParameters() + " " + command);
     }
     
-    public String getConfigs() throws IOException {
+    public String getConfigs() throws IOException, InterruptedException {
         Proc cmd = getCommand("--xml=\"<get_configs/>\" -i");
         System.out.println(cmd.getCommand());
         return cmd.exec();
@@ -53,6 +53,9 @@ public class Client {
             System.out.println(output);
             
         } catch (IOException ex) {
+            System.out.println("Encountered and error:");
+            System.out.println(ex);
+        } catch (InterruptedException ex) {
             System.out.println("Encountered and error:");
             System.out.println(ex);
         }
