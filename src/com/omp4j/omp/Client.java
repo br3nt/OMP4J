@@ -38,7 +38,7 @@ public class Client {
     }
     
     public String getConfigs() throws IOException, InterruptedException {
-        Proc cmd = getCommand("--xml=\"<get_configs/>\" -i");
+        Proc cmd = getCommand("--xml=\"<get_configs/>\" -i".replaceAll("\"", ""));
         
 //        cmd.addListener(new ProcListener() {
 //            @Override
@@ -62,7 +62,7 @@ public class Client {
 //            }
 //        });
         
-        String command = ompCommand() + " " + connectionParameters() + " --xml='<get_configs/>' -i";
+        String command = ompCommand() + " " + connectionParameters() + " --xml=\"<get_configs/>\" -i".replaceAll("\"", "");
         
         System.out.println("Running command: " + command);
         Process proc = Runtime.getRuntime().exec(command);
