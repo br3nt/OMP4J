@@ -37,6 +37,29 @@ public class Client {
     
     public String getConfigs() throws IOException, InterruptedException {
         Proc cmd = getCommand("--xml=\"<get_configs/>\" -i");
+        
+        cmd.addListener(new ProcListener() {
+            @Override
+            public void start() {
+                System.out.println("listener: start");
+            }
+            
+            @Override
+            public void line(String line) {
+                System.out.println("listener: " + line);
+            }
+            
+            
+            @Override
+            public void finished(String output) {
+                System.out.println("listener: final output from subject:");
+                System.out.println(output);
+                System.out.println();
+                System.out.println("listener: collected output:");
+                System.out.println(this.output);
+            }
+        });
+        
         System.out.println(cmd.getCommand());
         return cmd.exec();
     }
