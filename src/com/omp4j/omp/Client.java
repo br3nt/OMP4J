@@ -62,7 +62,7 @@ public class Client {
 //            }
 //        });
         
-        String command = ompCommand() + " " + connectionParameters() + " --xml=\"<get_configs/>\" -i";
+        String command = ompCommand() + " " + connectionParameters() + " --xml='<get_configs/>' -i";
         
         System.out.println("Running command: " + command);
         Process proc = Runtime.getRuntime().exec(command);
