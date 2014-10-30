@@ -37,6 +37,7 @@ public class Client {
     
     public String getConfigs() throws IOException {
         Proc cmd = getCommand("--xml=\"<get_configs/>\" -i");
+        System.out.println(cmd.getCommand());
         return cmd.exec();
     }
 
@@ -52,7 +53,8 @@ public class Client {
             System.out.println(output);
             
         } catch (IOException ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Encountered and error:");
+            System.out.println(ex);
         }
     }
     
