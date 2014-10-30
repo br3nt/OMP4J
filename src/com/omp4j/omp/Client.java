@@ -70,14 +70,15 @@ public class Client {
         
         // read output of nmap command
         String line, output = "";
-        while ((line = procReader.readLine()) != null) {
+        int nullCount = 0;
+        while ((line = procReader.readLine()) != null || nullCount < 10) {
+            if (line == null) nullCount++;
             System.out.println("line: " + line);
             output += line;
         }
 
         System.out.println("final:");
         System.out.println(output);
-
         proc.waitFor();
         System.out.println("Completed command");
         proc.destroy();
