@@ -62,7 +62,7 @@ public class Client {
 //            }
 //        });
         
-        String command = ompCommand() + " " + connectionParameters() + "--xml=\"<get_configs/>\" -i";
+        String command = ompCommand() + " " + connectionParameters() + " --xml=\"<get_configs/>\" -i";
         
         System.out.println("Running command: " + command);
         Process proc = Runtime.getRuntime().exec(command);
@@ -71,8 +71,13 @@ public class Client {
         // read output of nmap command
         String line, output = "";
         int nullCount = 0;
-        while ((line = procReader.readLine()) != null || nullCount < 100) {
-            if (line == null) nullCount++;
+        while ((line = procReader.readLine()) != null || nullCount < 10) {
+            if (line == null)  {
+                proc.wait(1000);
+                nullCount++;
+                System.out.println("wait: " + nullCount);
+                continue;
+            }
             System.out.println("line: " + line);
             output += line + "\n";
         }
