@@ -73,7 +73,6 @@ public class Client {
         int nullCount = 0;
         while ((line = procReader.readLine()) != null || nullCount < 10) {
             if (line == null)  {
-                proc.wait(1000);
                 nullCount++;
                 System.out.println("wait: " + nullCount);
                 continue;
@@ -81,6 +80,16 @@ public class Client {
             System.out.println("line: " + line);
             output += line + "\n";
         }
+        
+        
+        // read error output of command
+        BufferedReader errorReader = new BufferedReader(new InputStreamReader(proc.getErrorStream()));
+        output = "";
+        while ((line = errorReader.readLine()) != null) {
+            System.out.println("error: " + line);
+        }
+        
+        System.out.println("exit value: " + proc.exitValue());
 
         System.out.println("final:");
         System.out.println(output);
