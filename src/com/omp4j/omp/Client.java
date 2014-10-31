@@ -24,7 +24,7 @@ public class Client {
     }
     
     private String ompCommand() {
-        return "omp";
+        return "echo omp";
     }
     
     private String connectionParameters() {
