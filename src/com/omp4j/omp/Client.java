@@ -55,18 +55,7 @@ public class Client {
     public static void main(String... args) {
         try {
             Client omp = new Client("admin", "password");
-            
-            
-            Proc proc = new Proc("nmap -sP 10.0.0.*");
-            proc.addListener(omp.createListener());
-            proc.exec();
-            
-            
-            
             omp.testCommands();
-            
-            
-            
             
         } catch (IOException ex) {
             System.out.println("Encountered an IOException:");
@@ -80,6 +69,14 @@ public class Client {
     
     public void testCommands() throws IOException, InterruptedException {
         Proc cmd;
+        
+                
+        System.out.println("===  -g ================================================".substring(0, 65));
+        cmd = getCommand("-g");
+        cmd.addListener(createListener());
+        cmd.exec();
+        System.out.println();System.out.println();System.out.println();
+        
         
         System.out.println("===  new GetConfigs() ================================================".substring(0, 65));
         cmd = getCommand("--xml='" + new GetConfigs() + "' -i");
