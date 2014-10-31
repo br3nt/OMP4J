@@ -38,7 +38,7 @@ public class Client {
         try {
             String cmd = ompCommand() + " " + connectionParameters() + " " + command;
             byte[] arr = cmd.getBytes();
-            return new Proc(new String(arr, "UTF8"));
+            return new Proc(new String(arr, "UTF-8"));
         } catch (UnsupportedEncodingException ex) {
             System.out.println("Unable to convert to UTF8");
         }
@@ -47,9 +47,6 @@ public class Client {
     
     public String getConfigs() throws IOException, InterruptedException {
         Proc cmd = getCommand("--xml='" + new GetConfigs() + "' -i");
-        
-
-        
         
         return cmd.exec();
     }
@@ -88,8 +85,6 @@ public class Client {
         
         System.out.println("===  new GetConfigs() ================================================".substring(0, 65));
         cmd = getCommand("--xml='" + new GetConfigs() + "' -i");
-        System.out.println("command:");
-        System.out.println(cmd.getCommand());
         cmd.addListener(createListener());
         cmd.exec();
         System.out.println();System.out.println();System.out.println();
@@ -97,32 +92,24 @@ public class Client {
         
         System.out.println("===  '<get_configs />' ===============================================".substring(0, 65));
         cmd = getCommand("--xml='<get_configs />' -i");
-        System.out.println("command:");
-        System.out.println(cmd.getCommand());
         cmd.addListener(createListener());
         cmd.exec();
         System.out.println();System.out.println();System.out.println();
         
         System.out.println("===  \"<get_configs />\".replaceAll(\"\\\"\", \"\") ===============================================".substring(0, 65));
         cmd = getCommand("--xml=\"<get_configs />\" -i".replaceAll("\"", ""));
-        System.out.println("command:");
-        System.out.println(cmd.getCommand());
         cmd.addListener(createListener());
         cmd.exec();
         System.out.println();System.out.println();System.out.println();
         
         System.out.println("===  \"<get_configs />\" =============================================".substring(0, 65));
         cmd = getCommand("--xml=\"<get_configs />\" -i");
-        System.out.println("command:");
-        System.out.println(cmd.getCommand());
         cmd.addListener(createListener());
         cmd.exec();
         System.out.println();System.out.println();System.out.println();
         
         System.out.println("===  \\\"<get_configs />\\\" =========================================".substring(0, 65));
         cmd = getCommand("--xml=\\\"<get_configs />\\\" -i");
-        System.out.println("command:");
-        System.out.println(cmd.getCommand());
         cmd.addListener(createListener());
         cmd.exec();
         System.out.println();System.out.println();System.out.println();
@@ -139,8 +126,10 @@ public class Client {
     public ProcListener createListener() {
         return new ProcListener() {
             @Override
-            public void start() {
+            public void start(String command) {
                 System.out.println("listener: start");
+                System.out.println("command: ");
+                System.out.println(command);
             }
             
             @Override
