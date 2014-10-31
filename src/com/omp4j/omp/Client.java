@@ -40,62 +40,8 @@ public class Client {
     public String getConfigs() throws IOException, InterruptedException {
         Proc cmd = getCommand("--xml='" + new GetConfigs() + "' -i");
         
-//        cmd.addListener(new ProcListener() {
-//            @Override
-//            public void start() {
-//                System.out.println("listener: start");
-//            }
-//            
-//            @Override
-//            public void line(String line) {
-//                System.out.println("listener: " + line);
-//            }
-//            
-//            
-//            @Override
-//            public void finished(String output) {
-//                System.out.println("listener: final output from subject:");
-//                System.out.println(output);
-//                System.out.println();
-//                System.out.println("listener: collected output:");
-//                System.out.println(this.output);
-//            }
-//        });
-        
-        String command = ompCommand() + " " + connectionParameters() + " --xml='" + new GetConfigs() + "' -i";
-        
-        System.out.println("Running command: " + command);
-        Process proc = Runtime.getRuntime().exec(command);
-        BufferedReader procReader = new BufferedReader(new InputStreamReader(proc.getInputStream()));
-        
-        // read output of nmap command
-        String line, output = "";
-        int nullCount = 0;
-        while ((line = procReader.readLine()) != null || nullCount < 10) {
-            if (line == null)  {
-                nullCount++;
-                System.out.println("wait: " + nullCount);
-                continue;
-            }
-            System.out.println("line: " + line);
-            output += line + "\n";
-        }
-        
-        
-        // read error output of command
-        BufferedReader errorReader = new BufferedReader(new InputStreamReader(proc.getErrorStream()));
-        output = "";
-        while ((line = errorReader.readLine()) != null) {
-            System.out.println("error: " + line);
-        }
-        
-        System.out.println("exit value: " + proc.exitValue());
 
-        System.out.println("final:");
-        System.out.println(output);
-        proc.waitFor();
-        System.out.println("Completed command");
-        proc.destroy();
+        
         
         return cmd.exec();
     }
@@ -106,18 +52,81 @@ public class Client {
     public static void main(String... args) {
         try {
             Client omp = new Client("admin", "password");
+            omp.testCommands();
             
-            String output = omp.getConfigs();
-            System.out.println("===  Get Configs ==================");
-            System.out.println(output);
             
         } catch (IOException ex) {
-            System.out.println("Encountered and error:");
+            System.out.println("Encountered an IOException:");
             System.out.println(ex);
         } catch (InterruptedException ex) {
-            System.out.println("Encountered and error:");
+            System.out.println("Encountered an InterruptedException:");
             System.out.println(ex);
         }
+    }
+    
+    
+    public void testCommands() throws IOException, InterruptedException {
+        Proc cmd;
+        
+        System.out.println("===  new GetConfigs() ===========================================".substring(0, 65));
+        cmd = getCommand("--xml='" + new GetConfigs() + "' -i");
+        cmd.addListener(createListener());
+        cmd.exec();
+        System.out.println();System.out.println();System.out.println();
+        
+        
+        System.out.println("===  '<get_configs />' ==========================================".substring(0, 65));
+        cmd = getCommand("--xml='<get_configs />' -i");
+        cmd.addListener(createListener());
+        cmd.exec();
+        System.out.println();System.out.println();System.out.println();
+        
+        System.out.println("===  \"<get_configs />'\" =======================================".substring(0, 65));
+        cmd = getCommand("--xml=\"<get_configs />'\" -i");
+        cmd.addListener(createListener());
+        cmd.exec();
+        System.out.println();System.out.println();System.out.println();
+        
+        System.out.println("===  \\\"<get_configs />'\\\" ===================================".substring(0, 65));
+        cmd = getCommand("--xml=\\\"<get_configs />'\\\" -i");
+        cmd.addListener(createListener());
+        cmd.exec();
+        System.out.println();System.out.println();System.out.println();
+        
+        
+//        System.out.println("===   ===========================================================".substring(0, 65));
+        
+        
+//        System.out.println("===   ===========================================================".substring(0, 65));
+        
+        
+    }
+    
+    public ProcListener createListener() {
+        return new ProcListener() {
+            @Override
+            public void start() {
+                System.out.println("listener: start");
+            }
+            
+            @Override
+            public void line(String line) {
+                System.out.println("line: " + line);
+            }
+            
+            @Override
+            public void errorLine(String error) {
+                System.out.println("error: " + error);
+            }
+            
+            @Override
+            public void finished(String output, String error, int exitValue) {
+                System.out.println("listener: finished");
+                System.out.println("has output? " + (output == null || output.equals("")));
+                System.out.println("has errors? " + (error == null || error.equals("")));
+                System.out.println("exitValue: " + exitValue);
+            }
+        };
     }
     
 }
