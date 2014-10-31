@@ -4,8 +4,6 @@ import com.omp4j.commands.*;
 import com.proc.*;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -38,9 +36,9 @@ public class Client {
         try {
             String cmd = ompCommand() + " " + connectionParameters() + " " + command;
             byte[] arr = cmd.getBytes();
-            return new Proc(new String(arr, "UTF-8"));
+            return new Proc(new String(arr, "ISO-8859-1"));
         } catch (UnsupportedEncodingException ex) {
-            System.out.println("Unable to convert to UTF8");
+            System.out.println("Unable to convert to ISO-8859-1");
         }
         return null;
     }
