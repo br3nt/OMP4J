@@ -71,7 +71,7 @@ public class Client {
         Proc cmd;
         
                 
-        System.out.println("===  -g ================================================".substring(0, 65));
+        System.out.println("===  -g ==============================================================".substring(0, 65));
         cmd = getCommand("-g");
         cmd.addListener(createListener());
         cmd.exec();
