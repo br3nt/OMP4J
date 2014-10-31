@@ -68,36 +68,44 @@ public class Client {
     public void testCommands() throws IOException, InterruptedException {
         Proc cmd;
         
-        System.out.println("===  new GetConfigs() ===========================================".substring(0, 65));
+        System.out.println("===  new GetConfigs() ================================================".substring(0, 65));
         cmd = getCommand("--xml='" + new GetConfigs() + "' -i");
+        System.out.println("command:");
+        System.out.println(cmd.getCommand());
         cmd.addListener(createListener());
         cmd.exec();
         System.out.println();System.out.println();System.out.println();
         
         
-        System.out.println("===  '<get_configs />' ==========================================".substring(0, 65));
+        System.out.println("===  '<get_configs />' ===============================================".substring(0, 65));
         cmd = getCommand("--xml='<get_configs />' -i");
+        System.out.println("command:");
+        System.out.println(cmd.getCommand());
         cmd.addListener(createListener());
         cmd.exec();
         System.out.println();System.out.println();System.out.println();
         
-        System.out.println("===  \"<get_configs />'\" =======================================".substring(0, 65));
+        System.out.println("===  \"<get_configs />'\" ============================================".substring(0, 65));
         cmd = getCommand("--xml=\"<get_configs />'\" -i");
+        System.out.println("command:");
+        System.out.println(cmd.getCommand());
         cmd.addListener(createListener());
         cmd.exec();
         System.out.println();System.out.println();System.out.println();
         
-        System.out.println("===  \\\"<get_configs />'\\\" ===================================".substring(0, 65));
+        System.out.println("===  \\\"<get_configs />'\\\" ========================================".substring(0, 65));
         cmd = getCommand("--xml=\\\"<get_configs />'\\\" -i");
+        System.out.println("command:");
+        System.out.println(cmd.getCommand());
         cmd.addListener(createListener());
         cmd.exec();
         System.out.println();System.out.println();System.out.println();
         
         
-//        System.out.println("===   ===========================================================".substring(0, 65));
+//        System.out.println("===   ================================================================".substring(0, 65));
         
         
-//        System.out.println("===   ===========================================================".substring(0, 65));
+//        System.out.println("===   ================================================================".substring(0, 65));
         
         
     }
@@ -122,8 +130,8 @@ public class Client {
             @Override
             public void finished(String output, String error, int exitValue) {
                 System.out.println("listener: finished");
-                System.out.println("has output? " + (output == null || output.equals("")));
-                System.out.println("has errors? " + (error == null || error.equals("")));
+                System.out.println("has output? " + !(output == null || output.equals("")));
+                System.out.println("has errors? " + !(error == null || error.equals("")));
                 System.out.println("exitValue: " + exitValue);
             }
         };
