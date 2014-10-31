@@ -11,7 +11,7 @@ public class GetConfigs {
     private Document document;
     
     public GetConfigs() {
-        Element root = new Element("root");
+        Element root = new Element("get_configs");
         this.document = new Document(root);
     }
     
