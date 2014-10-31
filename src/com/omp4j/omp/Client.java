@@ -27,7 +27,7 @@ public class Client {
     }
     
     private String ompCommand() {
-        return "omp";
+        return " omp";
     }
     
     private String connectionParameters() {
@@ -62,7 +62,7 @@ public class Client {
             Client omp = new Client("admin", "password");
             
             
-            Proc proc = new Proc("ls -al");
+            Proc proc = new Proc("nmap -sP 10.0.0.*");
             proc.addListener(omp.createListener());
             proc.exec();
             
