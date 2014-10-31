@@ -26,7 +26,7 @@ public class Client {
     }
     
     private String ompCommand() {
-        return "omp";
+        return "sudo omp";
     }
     
     private String connectionParameters() {
@@ -52,7 +52,17 @@ public class Client {
     public static void main(String... args) {
         try {
             Client omp = new Client("admin", "password");
+            
+            
+            Proc proc = new Proc("ls -al");
+            proc.addListener(omp.createListener());
+            proc.exec();
+            
+            
+            
             omp.testCommands();
+            
+            
             
             
         } catch (IOException ex) {
