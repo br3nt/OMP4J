@@ -1,11 +1,11 @@
 package com.omp4j.omp;
 
+import com.omp4j.commands.*;
 import com.proc.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 /**
  *
  * @author Brent Jacobs
@@ -38,7 +38,7 @@ public class Client {
     }
     
     public String getConfigs() throws IOException, InterruptedException {
-        Proc cmd = getCommand("--xml=\'<get_configs/>\' -i".replaceAll("\"", ""));
+        Proc cmd = getCommand("--xml='" + new GetConfigs() + "' -i");
         
 //        cmd.addListener(new ProcListener() {
 //            @Override
@@ -62,7 +62,7 @@ public class Client {
 //            }
 //        });
         
-        String command = ompCommand() + " " + connectionParameters() + " --xml=\'<get_configs/>\' -i".replaceAll("\"", "");
+        String command = ompCommand() + " " + connectionParameters() + " --xml='" + new GetConfigs() + "' -i";
         
         System.out.println("Running command: " + command);
         Process proc = Runtime.getRuntime().exec(command);
