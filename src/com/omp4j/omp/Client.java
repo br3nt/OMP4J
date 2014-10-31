@@ -4,6 +4,7 @@ import com.omp4j.commands.*;
 import com.proc.*;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 /**
  *
@@ -24,30 +25,22 @@ public class Client {
         this(username, password, "localhost", "9390");
     }
     
-    private String ompCommand() {
-        return " omp";
-    }
+//    public Proc getCommand(String command) {
+//        try {
+//            String cmd = ompCommand() + " " + connectionParameters() + " " + command;
+//            byte[] arr = cmd.getBytes();
+//            return new Proc(new String(arr, "ISO-8859-1"));
+//        } catch (UnsupportedEncodingException ex) {
+//            System.out.println("Unable to convert to ISO-8859-1");
+//        }
+//        return null;
+//    }
     
-    private String connectionParameters() {
-        return "-u " + username + " -w " + password + " -h " + host + " -p " + port;
-    }
-    
-    public Proc getCommand(String command) {
-        try {
-            String cmd = ompCommand() + " " + connectionParameters() + " " + command;
-            byte[] arr = cmd.getBytes();
-            return new Proc(new String(arr, "ISO-8859-1"));
-        } catch (UnsupportedEncodingException ex) {
-            System.out.println("Unable to convert to ISO-8859-1");
-        }
-        return null;
-    }
-    
-    public String getConfigs() throws IOException, InterruptedException {
-        Proc cmd = getCommand("--xml='" + new GetConfigs() + "' -i");
-        
-        return cmd.exec();
-    }
+//    public String getConfigs() throws IOException, InterruptedException {
+//        Proc cmd = getCommand("--xml='" + new GetConfigs() + "' -i");
+//        
+//        return cmd.exec();
+//    }
 
     /**
      * @param args the command line arguments
@@ -69,44 +62,56 @@ public class Client {
     
     public void testCommands() throws IOException, InterruptedException {
         Proc cmd;
+        Proc proc;
         
                 
         System.out.println("===  -g ==============================================================".substring(0, 65));
-        cmd = getCommand("-g");
-        cmd.addListener(createListener());
-        cmd.exec();
+        proc = createOMPProc();
+        proc.addParameter("-g");
+        proc.addListener(createProcListener());
+        proc.exec();
         System.out.println();System.out.println();System.out.println();
         
         
         System.out.println("===  new GetConfigs() ================================================".substring(0, 65));
-        cmd = getCommand("--xml='" + new GetConfigs() + "' -i");
-        cmd.addListener(createListener());
-        cmd.exec();
+        proc = createOMPProc();
+        proc.addParameter("--xml=%s", new GetConfigs());
+        proc.addParameter("-i");
+        proc.addListener(createProcListener());
+        proc.exec();
+        System.out.println();System.out.println();System.out.println();
+        
+        System.out.println("===  'new GetConfigs()' ================================================".substring(0, 65));
+        proc = createOMPProc();
+        proc.addParameter("--xml='%s'", new GetConfigs());
+        proc.addParameter("-i");
+        proc.addListener(createProcListener());
+        proc.exec();
         System.out.println();System.out.println();System.out.println();
         
         
         System.out.println("===  '<get_configs />' ===============================================".substring(0, 65));
-        cmd = getCommand("--xml='<get_configs />' -i");
-        cmd.addListener(createListener());
-        cmd.exec();
-        System.out.println();System.out.println();System.out.println();
-        
-        System.out.println("===  \"<get_configs />\".replaceAll(\"\\\"\", \"\") ===============================================".substring(0, 65));
-        cmd = getCommand("--xml=\"<get_configs />\" -i".replaceAll("\"", ""));
-        cmd.addListener(createListener());
-        cmd.exec();
+        proc = createOMPProc();
+        proc.addParameter("--xml='%s'", "<get_configs />");
+        proc.addParameter("-i");
+        proc.addListener(createProcListener());
+        proc.exec();
         System.out.println();System.out.println();System.out.println();
         
         System.out.println("===  \"<get_configs />\" =============================================".substring(0, 65));
-        cmd = getCommand("--xml=\"<get_configs />\" -i");
-        cmd.addListener(createListener());
-        cmd.exec();
+        proc = createOMPProc();
+        proc.addParameter("--xml=\"%s\"", "<get_configs />");
+        proc.addParameter("-i");
+        proc.addListener(createProcListener());
+        proc.exec();
         System.out.println();System.out.println();System.out.println();
         
         System.out.println("===  \\\"<get_configs />\\\" =========================================".substring(0, 65));
-        cmd = getCommand("--xml=\\\"<get_configs />\\\" -i");
-        cmd.addListener(createListener());
-        cmd.exec();
+        proc = createOMPProc();
+        proc.addParameter("--xml=\\\"%s\\\"", "<get_configs />");
+        proc.addParameter("-i");
+        proc.addListener(createProcListener());
+        proc.exec();
         System.out.println();System.out.println();System.out.println();
         
         
@@ -118,13 +123,32 @@ public class Client {
         
     }
     
-    public ProcListener createListener() {
+    private String ompCommand() {
+        return "omp";
+    }
+    
+    public Proc createOMPProc() {
+        Proc proc = new Proc(ompCommand());
+        proc.addParameter("-u %s", username);
+        proc.addParameter("-w %s", password);
+        proc.addParameter("-h %s", host);
+        proc.addParameter("-p %s", port);
+        return proc;
+        
+    }
+    
+    public ProcListener createProcListener() {
         return new ProcListener() {
             @Override
-            public void start(String command) {
+            public void start(String command, List<String> parameters) {
+                String cmd = command;
+                for (String param : parameters) {
+                    command += " " + param;
+                }
+                
                 System.out.println("listener: start");
-                System.out.println("command: ");
-                System.out.println(command);
+                System.out.println("command: " );
+                System.out.println(cmd);
             }
             
             @Override
