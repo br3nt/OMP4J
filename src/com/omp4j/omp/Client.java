@@ -2,9 +2,7 @@ package com.omp4j.omp;
 
 import com.omp4j.commands.*;
 import com.proc.*;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 /**
  *
@@ -26,7 +24,7 @@ public class Client {
     }
     
     private String ompCommand() {
-        return "sudo omp";
+        return "omp";
     }
     
     private String connectionParameters() {
@@ -34,7 +32,9 @@ public class Client {
     }
     
     public Proc getCommand(String command) {
-        return new Proc(ompCommand() + " " + connectionParameters() + " " + command);
+        String cmd = ompCommand() + " " + connectionParameters() + " " + command;
+        char[] arr = cmd.toCharArray();
+        return new Proc(new String(arr));
     }
     
     public String getConfigs() throws IOException, InterruptedException {
