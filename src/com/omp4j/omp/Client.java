@@ -3,6 +3,9 @@ package com.omp4j.omp;
 import com.omp4j.commands.*;
 import com.proc.*;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -24,7 +27,7 @@ public class Client {
     }
     
     private String ompCommand() {
-        return "echo omp";
+        return "omp";
     }
     
     private String connectionParameters() {
@@ -32,9 +35,14 @@ public class Client {
     }
     
     public Proc getCommand(String command) {
-        String cmd = ompCommand() + " " + connectionParameters() + " " + command;
-        char[] arr = cmd.toCharArray();
-        return new Proc(new String(arr));
+        try {
+            String cmd = ompCommand() + " " + connectionParameters() + " " + command;
+            byte[] arr = cmd.getBytes();
+            return new Proc(new String(arr, "UTF8"));
+        } catch (UnsupportedEncodingException ex) {
+            System.out.println("Unable to convert to UTF8");
+        }
+        return null;
     }
     
     public String getConfigs() throws IOException, InterruptedException {
