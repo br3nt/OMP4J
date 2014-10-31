@@ -85,16 +85,16 @@ public class Client {
         cmd.exec();
         System.out.println();System.out.println();System.out.println();
         
-        System.out.println("===  \"<get_configs />'\" ============================================".substring(0, 65));
-        cmd = getCommand("--xml=\"<get_configs />'\" -i");
+        System.out.println("===  \"<get_configs />\" =============================================".substring(0, 65));
+        cmd = getCommand("--xml=\"<get_configs />\" -i");
         System.out.println("command:");
         System.out.println(cmd.getCommand());
         cmd.addListener(createListener());
         cmd.exec();
         System.out.println();System.out.println();System.out.println();
         
-        System.out.println("===  \\\"<get_configs />'\\\" ========================================".substring(0, 65));
-        cmd = getCommand("--xml=\\\"<get_configs />'\\\" -i");
+        System.out.println("===  \\\"<get_configs />\\\" =========================================".substring(0, 65));
+        cmd = getCommand("--xml=\\\"<get_configs />\\\" -i");
         System.out.println("command:");
         System.out.println(cmd.getCommand());
         cmd.addListener(createListener());
