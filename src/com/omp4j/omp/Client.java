@@ -3,7 +3,6 @@ package com.omp4j.omp;
 import com.omp4j.commands.*;
 import com.proc.*;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -36,11 +35,13 @@ public class Client {
 //        return null;
 //    }
     
-//    public String getConfigs() throws IOException, InterruptedException {
-//        Proc cmd = getCommand("--xml='" + new GetConfigs() + "' -i");
-//        
-//        return cmd.exec();
-//    }
+    public String getConfigs() throws IOException, InterruptedException {
+        Proc proc = createOMPProc();
+        proc.addParameter("--xml=%s", new GetConfigs());
+        proc.addParameter("-i");
+        proc.addListener(createProcListener());
+        return proc.exec();
+    }
 
     /**
      * @param args the command line arguments
@@ -64,15 +65,6 @@ public class Client {
         Proc cmd;
         Proc proc;
         
-                
-        System.out.println("===  -g ==============================================================".substring(0, 65));
-        proc = createOMPProc();
-        proc.addParameter("-g");
-        proc.addListener(createProcListener());
-        proc.exec();
-        System.out.println();System.out.println();System.out.println();
-        
-        
         System.out.println("===  new GetConfigs() ================================================".substring(0, 65));
         proc = createOMPProc();
         proc.addParameter("--xml=%s", new GetConfigs());
@@ -80,45 +72,6 @@ public class Client {
         proc.addListener(createProcListener());
         proc.exec();
         System.out.println();System.out.println();System.out.println();
-        
-        System.out.println("===  'new GetConfigs()' ================================================".substring(0, 65));
-        proc = createOMPProc();
-        proc.addParameter("--xml='%s'", new GetConfigs());
-        proc.addParameter("-i");
-        proc.addListener(createProcListener());
-        proc.exec();
-        System.out.println();System.out.println();System.out.println();
-        
-        
-        System.out.println("===  '<get_configs />' ===============================================".substring(0, 65));
-        proc = createOMPProc();
-        proc.addParameter("--xml='%s'", "<get_configs />");
-        proc.addParameter("-i");
-        proc.addListener(createProcListener());
-        proc.exec();
-        System.out.println();System.out.println();System.out.println();
-        
-        System.out.println("===  \"<get_configs />\" =============================================".substring(0, 65));
-        proc = createOMPProc();
-        proc.addParameter("--xml=\"%s\"", "<get_configs />");
-        proc.addParameter("-i");
-        proc.addListener(createProcListener());
-        proc.exec();
-        System.out.println();System.out.println();System.out.println();
-        
-        System.out.println("===  \\\"<get_configs />\\\" =========================================".substring(0, 65));
-        proc = createOMPProc();
-        proc.addParameter("--xml=\\\"%s\\\"", "<get_configs />");
-        proc.addParameter("-i");
-        proc.addListener(createProcListener());
-        proc.exec();
-        System.out.println();System.out.println();System.out.println();
-        
-        
-//        System.out.println("===   ================================================================".substring(0, 65));
-        
-        
-//        System.out.println("===   ================================================================".substring(0, 65));
         
         
     }
