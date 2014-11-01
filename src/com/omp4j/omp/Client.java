@@ -124,7 +124,7 @@ public class Client {
     }
     
     private String ompCommand() {
-        return "echo omp";
+        return "omp";
     }
     
     public Proc createOMPProc() {
@@ -143,7 +143,7 @@ public class Client {
             public void start(String command, List<String> parameters) {
                 String cmd = command;
                 for (String param : parameters) {
-                    command += " " + param;
+                    cmd += " " + param;
                 }
                 
                 System.out.println("listener: start");
