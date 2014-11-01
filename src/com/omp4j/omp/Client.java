@@ -129,10 +129,18 @@ public class Client {
     
     public Proc createOMPProc() {
         Proc proc = new Proc(ompCommand());
-        proc.addParameter("-u %s", username);
-        proc.addParameter("-w %s", password);
-        proc.addParameter("-h %s", host);
-        proc.addParameter("-p %s", port);
+        proc.addParameter("-u");
+        proc.addParameter(username);
+        proc.addParameter("-w");
+        proc.addParameter(password);
+        proc.addParameter("-h");
+        proc.addParameter(host);
+        proc.addParameter("-p");
+        proc.addParameter(port);
+        
+//        proc.addParameter("-w %s", password);
+//        proc.addParameter("-h %s", host);
+//        proc.addParameter("-p %s", port);
         return proc;
         
     }
