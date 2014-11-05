@@ -1,31 +1,21 @@
 package com.omp4j.commands;
 
-import nu.xom.*;
-
 /**
+ * In short: Stop a running task.
  *
+ * The client uses the stop_task command to manually stop a running task.
+ * 
+ * See: http://www.openvas.org/omp-5-0.html#command_stop_task
+ * 
  * @author Brent Jacobs
  */
-public class StopTask {
-            
-    private Document document;
+public class StopTask extends OMPCommand {
     
+    /**
+     * @param taskID A Task UUID.
+     */
     public StopTask(String taskID) {
-        Element root = new Element("stop_task");
-        Element taskIdEl = new Element("task_id");
-        
-        root.appendChild(taskIdEl);
-        this.document = new Document(root);
-        
-        taskIdEl.appendChild(taskID);
-    }
-    
-    public String toXML() {
-        return this.document.toXML();
-    }
-    
-    @Override
-    public String toString() {
-        return this.document.toXML();
+        super("stop_task");
+        addAttribute("task_id", taskID);
     }
 }

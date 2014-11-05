@@ -1,31 +1,16 @@
 package com.omp4j.commands;
 
-import nu.xom.*;
-
 /**
  *
  * @author Brent Jacobs
  */
-public class PauseTask {
-            
-    private Document document;
+public class PauseTask extends OMPCommand {
     
+    /**
+     * @param taskID A Task UUID.
+     */
     public PauseTask(String taskID) {
-        Element root = new Element("pause_task");
-        Element taskIdEl = new Element("task_id");
-        
-        root.appendChild(taskIdEl);
-        this.document = new Document(root);
-        
-        taskIdEl.appendChild(taskID);
-    }
-    
-    public String toXML() {
-        return this.document.toXML();
-    }
-    
-    @Override
-    public String toString() {
-        return this.document.toXML();
+        super("pause_task");
+        addAttribute("task_id", taskID);
     }
 }

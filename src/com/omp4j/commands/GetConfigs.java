@@ -1,26 +1,12 @@
 package com.omp4j.commands;
 
-import nu.xom.*;
-
 /**
  *
  * @author Brent Jacobs
  */
-public class GetConfigs {
-    
-    private Document document;
+public class GetConfigs extends OMPCommand {
     
     public GetConfigs() {
-        Element root = new Element("get_configs");
-        this.document = new Document(root);
-    }
-    
-    public String toXML() {
-        return this.document.toXML();
-    }
-    
-    @Override
-    public String toString() {
-        return this.document.toXML();
+        super("get_configs");
     }
 }
