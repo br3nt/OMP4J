@@ -135,7 +135,7 @@ public class Client {
             
             System.out.println("===  Check Report Status ======================================================".substring(0, 65));
             String reportStatus = null;
-            while (!reportStatus.equalsIgnoreCase("Done")) {
+            while (reportStatus == null || !reportStatus.equalsIgnoreCase("Done")) {
                 // sleep for 1 second
                 try {
                     Thread.sleep(1000);
