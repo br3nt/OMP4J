@@ -31,7 +31,7 @@ public abstract class OMPCommand {
     public final void addElementWithAttribute(String elementName, String attributeName, String value) {
         Element element = new Element(elementName);
         Attribute attribute = new Attribute(attributeName, value);
-        element.appendChild(attribute);
+        element.addAttribute(attribute);
         root.appendChild(element);
     }
     
