@@ -7,7 +7,7 @@ package com.omp4j.commands;
 public class GetReports extends OMPCommand {
     
     public GetReports(String reportID, String formatID) {
-        super("create_target");
+        super("get_reports");
         addAttribute("report_id", reportID);
         addAttribute("format_id", formatID);
     }

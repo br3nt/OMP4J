@@ -123,11 +123,9 @@ public class Client {
                 targetID = ctr.getTargetID();
             }
             
-            
             System.out.println("===  Create Task ======================================================".substring(0, 65));
             CreateTaskResponse ctkr = omp.createTask("Task for " + host, "", configID, targetID);
             String taskID = ctkr.getTaskID();
-            
             
             System.out.println("===  Start task ======================================================".substring(0, 65));
             StartTaskResponse str = omp.startTask(taskID);
@@ -162,7 +160,7 @@ public class Client {
             String report = reports.toXML();
             
             System.out.println("===  Print Report ======================================================".substring(0, 65));
-           System.out.println(report);
+            System.out.println(report);
             
             
         } catch (IOException ex) {
