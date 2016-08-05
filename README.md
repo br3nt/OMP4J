@@ -68,7 +68,7 @@ Questions
 
 I originally created this library for my final year project at university.
 
-The project contained threee parts, an Android app that communicated via bluetooth to a Raspberry Pi, a bluetooth server on the Raspberry Pi that listed for commands from the Android app, and this library which ran the commands and returned vulnerability data back to the Android app.
+The project contained three parts, an Android app that communicated via bluetooth to a Raspberry Pi, a bluetooth server on the Raspberry Pi that listened for commands from the Android app, and this library which ran OpenVAS commands on an accessible ip address and returned vulnerability report data back to the Android app.
 
 **Is this library still maintained?**
 
