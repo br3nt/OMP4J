@@ -60,3 +60,25 @@ String reportID = str.getReportID();
 ```
 
 An `omp` task takes time to complete.  Some form of poller is required to request the status of a task.  An example of this is given in [`com.omp4j.opm.Client`](https://github.com/br3nt/OMP4J/blob/master/src/com/omp4j/omp/Client.java)
+
+Questions
+=========
+
+**Why does this library exist?**
+
+I originally created this library for my final year project at university.
+
+The project contained threee parts, an Android app that communicated via bluetooth to a Raspberry Pi, a bluetooth server on the Raspberry Pi that listed for commands from the Android app, and this library which ran the commands and returned vulnerability data back to the Android app.
+
+**Is this library still maintained?**
+
+Not exactly... However, if anyone submits a pull request or posts an issue, I will investigate and respond (eventually).
+
+**Will I make any modifications to the library**
+
+I feel the code as relatively complete as is.  The library already has default methods that communicate with OpenVAS quite readily.  However, will consider any pull requests that add value.
+
+Furthermore, any developer using this library can create their own subclasses of [`com.omp4j.commands.OMPCommand`](https://github.com/br3nt/OMP4J/blob/master/src/com/omp4j/commands/OMPCommand.java) and 
+[`com.omp4j.responses.OMPResponse`](https://github.com/br3nt/OMP4J/blob/master/src/com/omp4j/responses/OMPResponse.java) to extend the existing functionality.
+
+Likewise, the existing subclasses of [`com.omp4j.commands.OMPCommand`](https://github.com/br3nt/OMP4J/blob/master/src/com/omp4j/commands/OMPCommand.java) can have additional parameters and options added to the xml quite easily.
